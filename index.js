@@ -1,4 +1,4 @@
-let itemArray = {};
+// let itemArray = {};
 let indexNo = 1;
 
 let addItem = document.querySelector('.menu');
@@ -10,8 +10,8 @@ addItem.addEventListener('submit', function addItems(e){
         alert("Enter any value");
     }
     else{
-        itemArray[indexNo] = indexNo;
-        itemArray['itemName'] = itemName;
+        // itemArray[indexNo] = indexNo;
+        // itemArray['itemName'] = itemName;
         display(itemName,indexNo);
         indexNo++;
         inputItemTag.value='';
@@ -55,23 +55,30 @@ let completebtn = document.querySelector('.Complete');
 let removebtn = document.querySelector('.remove');
 let canclebtn = document.querySelector('.cancle');
 
+let targetEle = {};
 allItemRows.addEventListener('click',function(e){
+    // console.log(e.target);
     if(hasClass(e.target,'item-name')){
         popup.style.display = 'block';
-        completebtn.addEventListener('click',function(){
-            e.target.style.textDecoration = 'line-through';
-            popup.style.display = 'none';
-        });
-        removebtn.addEventListener('click',function(){
-            e.target.parentNode.remove();
-            popup.style.display = 'none';
-            changeSerialNo();
-        });
-        canclebtn.addEventListener('click',function(){
-            popup.style.display = 'none';
-        });
+        e.stopPropagation();
+        targetEle = e;
+        console.log(targetEle);
     }
 });
+
+completebtn.addEventListener('click',function(){
+    targetEle.target.style.textDecoration = 'line-through';
+    popup.style.display = 'none';     
+});
+removebtn.addEventListener('click',function(){
+    targetEle.target.parentNode.remove();
+    popup.style.display = 'none';
+    changeSerialNo();
+});
+canclebtn.addEventListener('click',function(){
+    popup.style.display = 'none';
+});
+    
     
 function hasClass(elem, className){
     return elem.classList.contains(className);
